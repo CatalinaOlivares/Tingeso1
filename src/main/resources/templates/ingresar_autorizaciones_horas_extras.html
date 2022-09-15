@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>My Web App</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-0evHe/X+R7YkIZDRvuzKMRqM+OrBnVFBL6DOitfPri4tjfHxaWutUpFmBp4vmVor" crossorigin="anonymous">
+</head>
+<body>
+<section class="vh-100 gradient-custom">
+    <div class="container py-5 h-100">
+        <div class="row justify-content-center align-items-center h-100">
+            <div class="col-12 col-lg-9 col-xl-7">
+                <div class="card shadow-2-strong card-registration" style="border-radius: 15px;">
+                    <div class="card-body p-4 p-md-5">
+                        <h3 class="mb-4 pb-2 pb-md-0 mb-md-5">Registration Form</h3>
+                        <form th:action="@{/load_ingresar_autorizaciones_horas_extras}"  method="GET">
+                            <div class="col-md-6 mb-4">
+                                <div id="wrapper" >
+                                    <div class="input-group input-group-lg">
+                                        <span class="input-group-addon" id="sizing-addon1"></span>
+                                        <input type="text" name="rut"  class="form-control" placeholder="Rut a validar, ej: 11111111-1" aria-describedby="sizing-addon1" id="txt_rut">
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-6 mb-4 d-flex align-items-center">
+
+                                <div class="form-outline datepicker w-100">
+                                    <input type="text" name="fecha" class="form-control form-control-lg" placeholder="Fecha" aria-describedby="sizing-addon1" id="birthdayDate" />
+                                </div>
+                            </div>
+                            <div class="mt-4 pt-2">
+                                <input class="btn btn-primary btn-lg" type="submit" value="Autorizar" />
+                                <p th:text="${mensaje}" th:if="${mensaje ne null}" class="alert alert-primary"></p>
+                                <a class="btn btn-danger" href="/home" role="button">Volver</a>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+</body>
+</html>
