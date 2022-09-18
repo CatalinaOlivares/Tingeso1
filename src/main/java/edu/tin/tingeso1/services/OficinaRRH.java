@@ -31,9 +31,15 @@ public class OficinaRRH {
         return aniosServicio;
     }
 
-    public void ingresar_jus_horas_extras(String rut, Date fecha){
+    public int ingresar_jus_horas_extras(String rut, Date fecha){
         MarcaEntity  marca= marcaRepository.findByHoraAfterAndRut(rut,fecha);
-        ObtenerHorasExtras(rut,marca );
+        if(marca == null){
+            return 1;
+        }
+        else{
+            ObtenerHorasExtras(rut,marca );
+            return 0;
+        }
     }
     public void ObtenerHorasExtras(String rut,MarcaEntity  marca){
         Integer horas=0;
@@ -51,7 +57,7 @@ public class OficinaRRH {
         if(marca.getJustificativo() == Boolean.TRUE){
             return -2;
         }
-        Integer i = ObteneringresarJustificativo(rut, dia ,marca);
+        Integer i = ObteneringresarJustificativo(marca);
         if(i==1){
             marcaRepository.updateJustificativo(dia,rut);
             return 1;
@@ -61,7 +67,7 @@ public class OficinaRRH {
         }
     }
 
-    public Integer ObteneringresarJustificativo(String rut,Date fecha,MarcaEntity marca) throws ParseException {
+    public Integer ObteneringresarJustificativo(MarcaEntity marca) throws ParseException {
         if( marca.getHora().compareTo(Time.valueOf("09:10:00"))> 0){
             return 1;
         }return 0;
@@ -70,7 +76,7 @@ public class OficinaRRH {
     //calcular descuento fijo
     public double calcularDescuento(String rut){
         ArrayList<MarcaEntity> marcas = marcaRepository.findByHoraIngrAndRut(rut);
-        return ObtenerDescuento(rut,  marcas );
+        return ObtenerDescuento(rut, marcas );
     }
     public double ObtenerDescuento(String rut,ArrayList<MarcaEntity> marcas ) {
         double descuento = 0;
@@ -130,26 +136,30 @@ public class OficinaRRH {
 
     //calcular bonificacion por tiempo de servicio
     public double calcularBonificcionTiempoServicio(String rut) {
-        double bonificacionPorFechaIngreso = 0;
+        double bonificacionPorFechaIngreso = 0.0;
         Integer anios = calcularAniosServicio(rut);
         if (anios < 5) {
             return bonificacionPorFechaIngreso;
-        } else {
-            if (anios == 5 && anios < 10) {
-                bonificacionPorFechaIngreso = anios * 0.05;
-            }
-            if (anios == 10 && anios < 15) {
-                bonificacionPorFechaIngreso = anios * 0.08;
-            }
-            if (anios == 15 && anios < 20) {
-                bonificacionPorFechaIngreso = anios * 0.11;
-            }
-            if (anios == 20 && anios < 25) {
-                bonificacionPorFechaIngreso = anios * 0.14;
-            } else {
-                bonificacionPorFechaIngreso = anios * 0.17;
-            }
         }
+        else if (anios < 10) {
+                bonificacionPorFechaIngreso =  0.05;
+            return bonificacionPorFechaIngreso;
+        }
+        else if (anios < 15) {
+                bonificacionPorFechaIngreso =  0.08;
+            return bonificacionPorFechaIngreso;
+        }
+        else if (anios < 20) {
+                bonificacionPorFechaIngreso =  0.11;
+            return bonificacionPorFechaIngreso;
+        }
+        else if (anios < 25) {
+                bonificacionPorFechaIngreso =  0.14;
+            return bonificacionPorFechaIngreso;
+        }else {
+                bonificacionPorFechaIngreso = 0.17;
+            }
+
         return bonificacionPorFechaIngreso;
     }
 
@@ -161,10 +171,10 @@ public class OficinaRRH {
 
     public double sueldoFijo(String rut){
         EmpleadoEntity empleado = empleadoRepository.findByRut(rut);
-        if(empleado.getCategoria() == "A"){
+        if(empleado.getCategoria().equals("A")){
             return 1700000;
         }
-        else if(empleado.getCategoria() == "B"){
+        else if(empleado.getCategoria().equals("B")){
             return 1200000;
         }
         else{
@@ -188,8 +198,8 @@ public class OficinaRRH {
             Integer aniosServicio = calcularAniosServicio(rut);//si
             double horasExtras = calcularBonificacionHorasExtras(rut);//si
             double descuento = calcularDescuento(rut);
-            double bonificacion = calcularBonificcionTiempoServicio(rut);
             double sueldoFijo = sueldoFijo(rut);//si
+            double bonificacion = calcularBonificcionTiempoServicio(rut)* sueldoFijo;
             double sueldoBruto = (double) sueldoFijo+horasExtras+bonificacion; // Sueldo bruto como se ve en la formula es solo las sumas
             double previsional = (sueldoBruto - sueldoFijo*descuento)*0.10;
             double salud = (sueldoBruto - sueldoFijo*descuento)*0.08;

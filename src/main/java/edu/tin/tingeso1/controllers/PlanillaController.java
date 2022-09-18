@@ -26,10 +26,9 @@ public class PlanillaController {
     @RequestMapping(value="/loadPlanilla", method = {RequestMethod.GET, RequestMethod.PUT})
     public String loadPlanilla(RedirectAttributes ms) throws IOException, ParseException {
         oficinaRRH.Update();
-        ms.addFlashAttribute("mensaje","se importo con exito");
+        ms.addFlashAttribute("mensaje","Se ha calculado la planilla");
         return "redirect:/calcular_planilla";
     }
-
     @GetMapping("/calcular_planilla")
     public String calcular() {
         return "calcular_planilla";

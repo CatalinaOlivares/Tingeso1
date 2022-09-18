@@ -38,10 +38,10 @@ public class EmpleadoController {
         public String ingresar_Justificativo(@RequestParam String rut, @RequestParam String fecha, RedirectAttributes ms ) throws ParseException {
         int resultado = oficinaRRH.ingresarJustificativo(rut,fecha);
         switch(resultado){
-            case -2 -> ms.addFlashAttribute("mensaje","se ingresó el justificativo con exito");
-            case -1 -> ms.addFlashAttribute("mensaje","se ingresó el justificativo con exito");
-            case 0 -> ms.addFlashAttribute("mensaje","se ingresó el justificativo con exito");
+            case -2 -> ms.addFlashAttribute("mensaje","Dia ya justificado");
+            case -1 -> ms.addFlashAttribute("mensaje","Datos Erroneos, Marca no existe");
             case 1 -> ms.addFlashAttribute("mensaje","se ingresó el justificativo con exito");
+            case 0 -> ms.addFlashAttribute("mensaje","No puede optar a justificativo");
         }
         // usar el metodo para cargar justificativo
         return "redirect:/ingresar_Justificativos";
@@ -55,8 +55,11 @@ public class EmpleadoController {
 
     @RequestMapping(value="/load_ingresar_autorizaciones_horas_extras", method = {RequestMethod.GET, RequestMethod.PUT})
     public String ingresar_autorizaciones_horas_extras(@RequestParam String rut , @RequestParam Date fecha, RedirectAttributes ms){
-         oficinaRRH.ingresar_jus_horas_extras(rut,fecha);
-         ms.addFlashAttribute("mensaje","se ingresó el justificativo con exito");
+        Integer resultado=oficinaRRH.ingresar_jus_horas_extras(rut,fecha);
+        switch(resultado){
+            case 0 -> ms.addFlashAttribute("mensaje","Se autorizaron las horas extras");
+            case 1 -> ms.addFlashAttribute("mensaje","Datos Erroneos, Marca no existe");
+        }
         return "redirect:/ingresar_autorizaciones_horas_extras";
     }
 
