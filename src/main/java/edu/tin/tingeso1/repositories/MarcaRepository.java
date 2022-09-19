@@ -29,8 +29,5 @@ public interface MarcaRepository extends JpaRepository<MarcaEntity, Long> {
     @Query(value = "select * from marcas as m where m.rut = :rut and m.hora > '8:10' and m.hora < '18:00'" ,
             nativeQuery = true)
     ArrayList<MarcaEntity> findByHoraIngrAndRut(@Param("rut") String rut);
-   /* @Query(value = "SELECT @s\\:=@s+1, m.* FROM (SELECT * from marcas as m where m.rut = :rut order by hora) as m, (SELECT @s\\:= 0) AS s where @s < (SELECT count(*)/2 from (SELECT * from marcas as m where m.rut = :rut order by hora) d2)",
-            nativeQuery = true)
-    ArrayList<MarcaEntity> findByHoraIngrAndRut(@Param("rut") String rut);
-    */
+   
 }

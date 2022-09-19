@@ -18,7 +18,7 @@ public class PlanillaController {
     @Autowired
     OficinaRRH oficinaRRH;
     @RequestMapping(value="/loadPlanilla", method = {RequestMethod.GET, RequestMethod.PUT})
-    public String loadPlanilla(RedirectAttributes ms) throws IOException, ParseException {
+    public String loadPlanilla(RedirectAttributes ms){
         oficinaRRH.update();
         ms.addFlashAttribute("mensaje","Se ha calculado la planilla");
         return "redirect:/calcular_planilla";

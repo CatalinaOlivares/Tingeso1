@@ -46,7 +46,7 @@ public class OficinaRRH {
         empleadoRepository.updateHorasExtras(rut,horas);
     }
 
-    public int ingresarJustificativo(String rut,String fecha) throws ParseException {
+    public Integer ingresarJustificativo(String rut,String fecha) throws ParseException {
         Date dia = Date.valueOf(fecha);
         MarcaEntity marca= marcaRepository.findByRutAndFecha(dia,rut);
         if(marca == null){
@@ -76,7 +76,7 @@ public class OficinaRRH {
         ArrayList<MarcaEntity> marcas = marcaRepository.findByHoraIngrAndRut(rut);
         return obtenerDescuento(rut, marcas );
     }
-    public double obtenerDescuento(String rut,List<MarcaEntity> marcas ) {
+    public double obtenerDescuento(String rut,ArrayList<MarcaEntity> marcas ) {
         double descuento = 0;
         for (MarcaEntity marca : marcas) {
             Integer hor = (marca.getHora().getHours() -8)*60;

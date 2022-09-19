@@ -2,10 +2,8 @@ package edu.tin.tingeso1.entities;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import javax.persistence.*;
 import java.sql.Time;
-import java.time.LocalTime;
 import java.util.Date;
 
 @Entity

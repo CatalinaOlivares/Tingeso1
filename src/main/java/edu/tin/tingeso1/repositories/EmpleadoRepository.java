@@ -39,7 +39,7 @@ public interface EmpleadoRepository extends JpaRepository<EmpleadoEntity, Long> 
 
     @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Transactional
-    @Query(value = "update empleados set horas_extras = :horas_extras  where  rut = :rut",
+    @Query(value = "update empleados set horas_Extras = :horas_extras  where  rut = :rut",
             nativeQuery = true)
     void updateHorasExtras( @Param("rut") String rut,@Param("horas_extras") Integer horas_extras );
 
