@@ -28,12 +28,12 @@ public class EmpleadoController {
         return "index";
     }
     @GetMapping("/ingresar_Justificativos")
-        public String ingresar_Justificativo(){
+        public String ingresarJustificativo(){
         return "ingresar_Justificativos";
     }
 
     @RequestMapping(value="load_ingresar_Justificativos", method = {RequestMethod.GET, RequestMethod.PUT} )
-        public String ingresar_Justificativo(@RequestParam String rut, @RequestParam String fecha, RedirectAttributes ms ) throws ParseException {
+        public String ingresarJustificativo(@RequestParam String rut, @RequestParam String fecha, RedirectAttributes ms ) throws ParseException {
         int resultado = oficinaRRH.ingresarJustificativo(rut,fecha);
         switch(resultado){
             case -2 -> ms.addFlashAttribute("mensaje","Dia ya justificado");
@@ -47,12 +47,12 @@ public class EmpleadoController {
 
 
     @GetMapping("/ingresar_autorizaciones_horas_extras")
-    public String ingresar_autorizaciones_horas_extras(){
+    public String ingresarAutorizacionHorEx(){
         return "ingresar_autorizaciones_horas_extras";
     }
 
     @RequestMapping(value="/load_ingresar_autorizaciones_horas_extras", method = {RequestMethod.GET, RequestMethod.PUT})
-    public String ingresar_autorizaciones_horas_extras(@RequestParam String rut , @RequestParam Date fecha, RedirectAttributes ms){
+    public String ingresarAutorizacionHorEx(@RequestParam String rut , @RequestParam Date fecha, RedirectAttributes ms){
         Integer resultado=oficinaRRH.ingresarJusHorExtra(rut,fecha);
         switch(resultado){
             case 0 -> ms.addFlashAttribute("mensaje","Se autorizaron las horas extras");
@@ -63,7 +63,7 @@ public class EmpleadoController {
 
 
     @GetMapping("/mostrar_reporte")
-    public String mostrar_reporte(Model model) {
+    public String mostrarReporte(Model model) {
         ArrayList<EmpleadoEntity>empleados=empleadoService.obtenerEmpleados();
         model.addAttribute("empleados",empleados);
         return "mostrar_reporte";

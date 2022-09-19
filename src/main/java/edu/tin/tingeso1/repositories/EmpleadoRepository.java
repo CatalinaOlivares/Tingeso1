@@ -24,7 +24,7 @@ public interface EmpleadoRepository extends JpaRepository<EmpleadoEntity, Long> 
             "cot_sal = :salud," +
             "sueldo_final = :sueldoFinal where e.rut = :rut",
             nativeQuery = true)
-    void updateByOne(@Param("rut") String rut, @Param("aniosServicio") Integer aniosServicio, @Param("horasExtras") Double horasExtras,
+    void updateByOne(@Param("rut") String rut, @Param("aniosServicio") Integer aniosServicio, @Param("horasExtras") Integer horasExtras,
                           @Param("descuento") Double descuento, @Param("bonificacion") Double bonificacion,
                           @Param("sueldoFijo") Double sueldoFijo, @Param("sueldoBruto") Double sueldoBruto, @Param("previsional") Double previsional,@Param("salud") Double salud,@Param("sueldoFinal") Double sueldoFinal);
 
@@ -41,6 +41,6 @@ public interface EmpleadoRepository extends JpaRepository<EmpleadoEntity, Long> 
     @Transactional
     @Query(value = "update empleados set horas_extras = :horas_extras  where  rut = :rut",
             nativeQuery = true)
-    void updateHoras_Extras( @Param("rut") String rut,@Param("horas_extras") Integer horas_extras );
+    void updateHorasExtras( @Param("rut") String rut,@Param("horas_extras") Integer horas_extras );
 
 }

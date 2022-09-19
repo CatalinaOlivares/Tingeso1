@@ -26,8 +26,7 @@ public class OficinaRRH {
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
         Integer year = calendar.get(Calendar.YEAR);
-        Integer aniosServicio=(2022-year);
-        return aniosServicio;
+        return (2022-year);
     }
 
     public int ingresarJusHorExtra(String rut, Date fecha){
@@ -44,7 +43,7 @@ public class OficinaRRH {
         Integer horas=0;
         Integer hora = marca.getHora().getHours();
         horas = hora - 18;
-        empleadoRepository.updateHoras_Extras(rut,horas);
+        empleadoRepository.updateHorasExtras(rut,horas);
     }
 
     public int ingresarJustificativo(String rut,String fecha) throws ParseException {
@@ -77,7 +76,7 @@ public class OficinaRRH {
         ArrayList<MarcaEntity> marcas = marcaRepository.findByHoraIngrAndRut(rut);
         return obtenerDescuento(rut, marcas );
     }
-    public double obtenerDescuento(String rut,ArrayList<MarcaEntity> marcas ) {
+    public double obtenerDescuento(String rut,List<MarcaEntity> marcas ) {
         double descuento = 0;
         for (MarcaEntity marca : marcas) {
             Integer hor = (marca.getHora().getHours() -8)*60;
@@ -102,12 +101,12 @@ public class OficinaRRH {
     //Categoria "A":
     //Categoria "B":
     //Categoria "C":
-    public double calcularBonificacionHorasExtras(String rut){
+    public Integer calcularBonificacionHorasExtras(String rut){
         EmpleadoEntity empleado=empleadoRepository.findByRut(rut);
         return obtenerBonifHorasExtras(rut, empleado);
     }
-    public double obtenerBonifHorasExtras(String rut, EmpleadoEntity empleado) {
-        double bonificacionPorHorasExtras = 0;
+    public Integer obtenerBonifHorasExtras(String rut, EmpleadoEntity empleado) {
+        Integer bonificacionPorHorasExtras = 0;
         Integer numHorasExtras;
         if(empleado.getHorasExtras() == null){
             numHorasExtras = 0;
@@ -184,7 +183,7 @@ public class OficinaRRH {
         for(EmpleadoEntity empleado:empleados){
             String rut= empleado.getRut();
             Integer aniosServicio = calcularAniosServicio(rut);//si
-            double horasExtras = calcularBonificacionHorasExtras(rut);//si
+            Integer horasExtras = calcularBonificacionHorasExtras(rut);//si
             double sueldoFijo = sueldoFijo(rut);//si
             double descuento = calcularDescuento(rut)*sueldoFijo;//si
             double bonificacion = calcularBonificacionTiempoServicio(rut)* sueldoFijo;
