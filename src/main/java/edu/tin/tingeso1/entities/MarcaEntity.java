@@ -34,5 +34,14 @@ public class MarcaEntity {
         this.justificativo=Boolean.FALSE;
     }
 
+    public MarcaEntity(Date date, Time hora, String rut, Boolean justificativo) {
+        this.fecha=date;
+        this.hora=hora;
+        this.rut=rut;
+        this.justificativo=justificativo;
+    }
+
+
+
 }
 
