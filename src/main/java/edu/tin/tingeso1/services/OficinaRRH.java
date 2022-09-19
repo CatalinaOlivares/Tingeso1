@@ -7,7 +7,6 @@ import edu.tin.tingeso1.repositories.MarcaRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.sql.Date;
-
 import java.sql.Time;
 import java.text.ParseException;
 import java.util.*;
@@ -20,28 +19,28 @@ public class OficinaRRH {
     EmpleadoRepository empleadoRepository;
     public Integer calcularAniosServicio(String rut){
         EmpleadoEntity empleado=empleadoRepository.findByRut(rut);
-        return ObtenerAniosServicio(rut, empleado);
+        return obtenerAniosServicio(rut, empleado);
     }
-    public Integer ObtenerAniosServicio(String rut,EmpleadoEntity empleado){
+    public Integer obtenerAniosServicio(String rut,EmpleadoEntity empleado){
         Date date= empleado.getFechaIngreso();
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
-        int year = calendar.get(Calendar.YEAR);
-        int aniosServicio=(2022-year);
+        Integer year = calendar.get(Calendar.YEAR);
+        Integer aniosServicio=(2022-year);
         return aniosServicio;
     }
 
-    public int ingresar_jus_horas_extras(String rut, Date fecha){
+    public int ingresarJusHorExtra(String rut, Date fecha){
         MarcaEntity  marca= marcaRepository.findByHoraAfterAndRut(rut,fecha);
         if(marca == null){
             return 1;
         }
         else{
-            ObtenerHorasExtras(rut,marca );
+            obtenerHorasExtras(rut,marca );
             return 0;
         }
     }
-    public void ObtenerHorasExtras(String rut,MarcaEntity  marca){
+    public void obtenerHorasExtras(String rut,MarcaEntity  marca){
         Integer horas=0;
         Integer hora = marca.getHora().getHours();
         horas = hora - 18;
@@ -57,7 +56,7 @@ public class OficinaRRH {
         if(marca.getJustificativo() == Boolean.TRUE){
             return -2;
         }
-        Integer i = ObteneringresarJustificativo(marca);
+        Integer i = obteneringresarJustificativo(marca);
         if(i==1){
             marcaRepository.updateJustificativo(dia,rut);
             return 1;
@@ -67,7 +66,7 @@ public class OficinaRRH {
         }
     }
 
-    public Integer ObteneringresarJustificativo(MarcaEntity marca) throws ParseException {
+    public Integer obteneringresarJustificativo(MarcaEntity marca) throws ParseException {
         if( marca.getHora().compareTo(Time.valueOf("09:10:00"))> 0){
             return 1;
         }return 0;
@@ -76,9 +75,9 @@ public class OficinaRRH {
     //calcular descuento fijo
     public double calcularDescuento(String rut){
         ArrayList<MarcaEntity> marcas = marcaRepository.findByHoraIngrAndRut(rut);
-        return ObtenerDescuento(rut, marcas );
+        return obtenerDescuento(rut, marcas );
     }
-    public double ObtenerDescuento(String rut,ArrayList<MarcaEntity> marcas ) {
+    public double obtenerDescuento(String rut,ArrayList<MarcaEntity> marcas ) {
         double descuento = 0;
         for (MarcaEntity marca : marcas) {
             Integer hor = (marca.getHora().getHours() -8)*60;
@@ -105,9 +104,9 @@ public class OficinaRRH {
     //Categoria "C":
     public double calcularBonificacionHorasExtras(String rut){
         EmpleadoEntity empleado=empleadoRepository.findByRut(rut);
-        return ObtenerBonifHorasExtras(rut, empleado);
+        return obtenerBonifHorasExtras(rut, empleado);
     }
-    public double ObtenerBonifHorasExtras(String rut, EmpleadoEntity empleado) {
+    public double obtenerBonifHorasExtras(String rut, EmpleadoEntity empleado) {
         double bonificacionPorHorasExtras = 0;
         Integer numHorasExtras;
         if(empleado.getHorasExtras() == null){
@@ -156,7 +155,7 @@ public class OficinaRRH {
     //calcular Sueldo
     public double calcularSueldoFinal(double sueldoFijo, String rut){
         EmpleadoEntity empleado=empleadoRepository.findByRut(rut);
-        return ObtenerSueldoFinal(sueldoFijo, rut, empleado);
+        return obtenerSueldoFinal(sueldoFijo, rut, empleado);
     }
 
     public double sueldoFijo(String rut){
@@ -172,16 +171,15 @@ public class OficinaRRH {
         }
     }
 
-    public double ObtenerSueldoFinal(double sueldoFijo,String rut,EmpleadoEntity empleado) {
+    public double obtenerSueldoFinal(double sueldoFijo,String rut,EmpleadoEntity empleado) {
         double sueldo = 0;
         sueldo= sueldoFijo(rut)+(sueldoFijo*calcularBonificacionTiempoServicio(rut))+ calcularBonificacionHorasExtras(rut) - (sueldoFijo*calcularDescuento(rut));
         double cot=0.10;
         double cot2=0.08;
-        double sueldoFinal= sueldo - (sueldo * cot) - (sueldo * cot2);//descuentos fijos cotizacion
-        return sueldoFinal;
+        return (sueldo - (sueldo * cot) - (sueldo * cot2));//descuentos fijos cotizacion
     }
 
-    public void Update(){
+    public void update(){
         List<EmpleadoEntity> empleados= empleadoRepository.findAll();
         for(EmpleadoEntity empleado:empleados){
             String rut= empleado.getRut();

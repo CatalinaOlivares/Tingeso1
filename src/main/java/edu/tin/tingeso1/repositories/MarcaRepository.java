@@ -4,15 +4,11 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
-
-
 import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Date;
 
 public interface MarcaRepository extends JpaRepository<MarcaEntity, Long> {
-    public MarcaEntity findByRut(String rut);
-    public MarcaEntity findByFecha(Date fecha);
     @Modifying(clearAutomatically = true,flushAutomatically = true)
     @Transactional
     @Query(value = "update marcas set justificativo = true where fecha = :fecha and rut = :rut",

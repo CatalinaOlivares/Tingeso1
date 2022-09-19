@@ -1,12 +1,10 @@
 package edu.tin.tingeso1.controllers;
 import edu.tin.tingeso1.entities.EmpleadoEntity;
-import edu.tin.tingeso1.entities.MarcaEntity;
 import edu.tin.tingeso1.services.EmpleadoService;
 import edu.tin.tingeso1.services.OficinaRRH;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -55,7 +53,7 @@ public class EmpleadoController {
 
     @RequestMapping(value="/load_ingresar_autorizaciones_horas_extras", method = {RequestMethod.GET, RequestMethod.PUT})
     public String ingresar_autorizaciones_horas_extras(@RequestParam String rut , @RequestParam Date fecha, RedirectAttributes ms){
-        Integer resultado=oficinaRRH.ingresar_jus_horas_extras(rut,fecha);
+        Integer resultado=oficinaRRH.ingresarJusHorExtra(rut,fecha);
         switch(resultado){
             case 0 -> ms.addFlashAttribute("mensaje","Se autorizaron las horas extras");
             case 1 -> ms.addFlashAttribute("mensaje","Datos Erroneos, Marca no existe");
