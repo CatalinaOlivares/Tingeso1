@@ -15,7 +15,7 @@ public class MarcaService {
     MarcaRepository marcaRepository;
 
     public void leerData() throws IOException, ParseException {
-        File doc = new File("Data.txt");
+        File doc = new File("DATA.txt");
         BufferedReader obj = new BufferedReader(new FileReader(doc));
         String strng;
         while ((strng = obj.readLine()) != null){

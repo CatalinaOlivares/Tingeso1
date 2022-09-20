@@ -120,8 +120,12 @@ public class OficinaRRH {
         }
         else if(empleado.getCategoria().equals("B")) {
             bonificacionPorHorasExtras = numHorasExtras * 20000;
-        } else {
-            bonificacionPorHorasExtras = numHorasExtras * 10000;
+        }
+        else if(empleado.getCategoria().equals("C")) {
+            bonificacionPorHorasExtras = numHorasExtras * 100000;
+        }
+        else {
+            bonificacionPorHorasExtras = 0;
         }
         return bonificacionPorHorasExtras;
 
@@ -159,16 +163,23 @@ public class OficinaRRH {
 
     public double sueldoFijo(String rut){
         EmpleadoEntity empleado = empleadoRepository.findByRut(rut);
+        return obtenerSueldoFijo(empleado);
+    }
+    public double obtenerSueldoFijo( EmpleadoEntity empleado) {
         if(empleado.getCategoria().equals("A")){
             return 1700000;
         }
         else if(empleado.getCategoria().equals("B")){
             return 1200000;
         }
-        else{
+        else if(empleado.getCategoria().equals("C")){
             return 800000;
         }
+        else{
+            return 0;
+        }
     }
+
 
     public double obtenerSueldoFinal(double sueldoFijo,String rut,EmpleadoEntity empleado) {
         double sueldo = 0;
