@@ -21,7 +21,7 @@ public class EmpleadoController {
     @Autowired
     OficinaRRH oficinaRRH;
 
-    @GetMapping("/home")
+    @GetMapping("/")
     public String listar(Model model) {
         ArrayList<EmpleadoEntity>empleados=empleadoService.obtenerEmpleados();
         model.addAttribute("empleados",empleados);

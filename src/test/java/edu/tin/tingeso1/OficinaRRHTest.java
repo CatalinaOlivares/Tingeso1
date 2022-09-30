@@ -15,10 +15,10 @@ import java.sql.Time;
 import java.text.ParseException;
 import java.time.LocalDate;
 
-@DataJpaTest
-@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
+//@DataJpaTest
+//@AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.NONE)
 
-class OficinaRRHHTest {
+class OficinaRRHTest {
     @Autowired
     private TestEntityManager entityManager;
 
@@ -80,14 +80,24 @@ class OficinaRRHHTest {
         double descuento = oficinaRRHH.obtenerDescuento(empleado.getRut(),marcas);
         assertEquals(0.21, descuento, 0.0);
     }
+    @Test
+    void obtenerDescuentoTest3() {
+        empleado.setRut("27.134.678-6");
+        ArrayList<MarcaEntity> marcas=new ArrayList();
+        marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 1, 1)), Time.valueOf("10:00:00"), "27.134.678-6",false));
+        marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 2, 1)), Time.valueOf("8:30:00"), "27.134.678-6",false));
+        marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 2, 3)), Time.valueOf("8:20:00"), "27.134.678-6",false));
+        double descuento = oficinaRRHH.obtenerDescuento(empleado.getRut(),marcas);
+        assertEquals(0.28, descuento, 0.0);
+    }
     //calcularBonificacionTiempoServicio?????
     @Test
-    void obtenerBonifHoraExtraTest() {
+    void obtenerBonifHoraExtraTest() { // REVISAR
         empleado.setRut("27.134.678-6");
         empleado.setCategoria("C");
         empleado.setHorasExtras(10);
         double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado.getRut(),empleado);
-        assertEquals(100000, bonifHoraExtra, 0.0);
+        assertEquals(1000000, bonifHoraExtra, 0.0);
     }
     @Test
     void obtenerBonifHoraExtraTest2() {
@@ -117,6 +127,14 @@ class OficinaRRHHTest {
         assertEquals(0, bonifHoraExtra, 0.0);
     }
     @Test
+    void obtenerBonifHoraExtraTest5() {
+        empleado.setRut("27.134.678-6");
+        empleado.setCategoria("F");
+        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado.getRut(),empleado);
+
+        assertEquals(0, bonifHoraExtra, 0.0);
+    }
+    @Test
     void obtenerSueldoFijoTest() {
         empleado.setRut("27.134.678-6");
         empleado.setCategoria("C");
@@ -137,6 +155,13 @@ class OficinaRRHHTest {
         empleado.setCategoria("F");
         double sueldoFijo = oficinaRRHH.obtenerSueldoFijo(empleado);
         assertEquals(0, sueldoFijo, 0.0);
+    }
+    @Test
+    void obtenerSueldoFijoTest4() {
+        empleado.setRut("27.134.678-6");
+        empleado.setCategoria("B");
+        double sueldoFijo = oficinaRRHH.obtenerSueldoFijo(empleado);
+        assertEquals(1200000, sueldoFijo, 0.0);
     }
     
 
