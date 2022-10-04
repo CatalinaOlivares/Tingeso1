@@ -4,8 +4,6 @@ import edu.tin.tingeso1.entities.MarcaEntity;
 import edu.tin.tingeso1.repositories.EmpleadoRepository;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.autoconfigure.orm.jpa.DataJpaTest;
 import org.springframework.boot.test.autoconfigure.orm.jpa.TestEntityManager;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import java.util.ArrayList;
@@ -32,7 +30,7 @@ class OficinaRRHTest {
     void obtenerAniosServicioTest() {
         empleado.setFechaIngreso(Date.valueOf(LocalDate.of(2019, 1, 1)));
         empleado.setRut("27.134.678-6");
-        Integer aniosServicio = oficinaRRHH.obtenerAniosServicio(empleado.getRut(),empleado);
+        Integer aniosServicio = oficinaRRHH.obtenerAniosServicio(empleado);
         assertEquals(3, aniosServicio, 0.0);
     }
 
@@ -67,7 +65,7 @@ class OficinaRRHTest {
         marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 1, 1)), Time.valueOf("10:00:00"), "27.134.678-6",true));
         marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 2, 1)), Time.valueOf("08:00:00"), "27.134.678-6",false));
         marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 2, 3)), Time.valueOf("09:00:00"), "27.134.678-6",false));
-        double descuento = oficinaRRHH.obtenerDescuento(empleado.getRut(),marcas);
+        double descuento = oficinaRRHH.obtenerDescuento(marcas);
         assertEquals(0.06, descuento, 0.0);
     }
     @Test
@@ -77,7 +75,7 @@ class OficinaRRHTest {
         marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 1, 1)), Time.valueOf("10:00:00"), "27.134.678-6",true));
         marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 2, 1)), Time.valueOf("11:00:00"), "27.134.678-6",false));
         marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 2, 3)), Time.valueOf("09:00:00"), "27.134.678-6",false));
-        double descuento = oficinaRRHH.obtenerDescuento(empleado.getRut(),marcas);
+        double descuento = oficinaRRHH.obtenerDescuento(marcas);
         assertEquals(0.21, descuento, 0.0);
     }
     @Test
@@ -87,7 +85,7 @@ class OficinaRRHTest {
         marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 1, 1)), Time.valueOf("10:00:00"), "27.134.678-6",false));
         marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 2, 1)), Time.valueOf("8:30:00"), "27.134.678-6",false));
         marcas.add(new MarcaEntity(Date.valueOf(LocalDate.of(2019, 2, 3)), Time.valueOf("8:20:00"), "27.134.678-6",false));
-        double descuento = oficinaRRHH.obtenerDescuento(empleado.getRut(),marcas);
+        double descuento = oficinaRRHH.obtenerDescuento(marcas);
         assertEquals(0.28, descuento, 0.0);
     }
     //calcularBonificacionTiempoServicio?????

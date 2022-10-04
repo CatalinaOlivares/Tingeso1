@@ -19,9 +19,9 @@ public class OficinaRRH {
     EmpleadoRepository empleadoRepository;
     public Integer calcularAniosServicio(String rut){
         EmpleadoEntity empleado=empleadoRepository.findByRut(rut);
-        return obtenerAniosServicio(rut, empleado);
+        return obtenerAniosServicio(empleado);
     }
-    public Integer obtenerAniosServicio(String rut,EmpleadoEntity empleado){
+    public Integer obtenerAniosServicio(EmpleadoEntity empleado){
         Date date= empleado.getFechaIngreso();
         Calendar calendar = new GregorianCalendar();
         calendar.setTime(date);
@@ -74,9 +74,9 @@ public class OficinaRRH {
     //calcular descuento fijo
     public double calcularDescuento(String rut){
         ArrayList<MarcaEntity> marcas = marcaRepository.findByHoraIngrAndRut(rut);
-        return obtenerDescuento(rut, marcas );
+        return obtenerDescuento( marcas );
     }
-    public double obtenerDescuento(String rut,ArrayList<MarcaEntity> marcas ) {
+    public double obtenerDescuento(ArrayList<MarcaEntity> marcas ) {
         double descuento = 0;
         for (MarcaEntity marca : marcas) {
             Integer hor = (marca.getHora().getHours() -8)*60;
