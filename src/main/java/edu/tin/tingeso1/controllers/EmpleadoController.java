@@ -32,7 +32,7 @@ public class EmpleadoController {
         return "ingresar_Justificativos";
     }
 
-    @RequestMapping(value="load_ingresar_Justificativos", method = {RequestMethod.PUT} )
+    @RequestMapping(value="load_ingresar_Justificativos", method = {RequestMethod.GET, RequestMethod.PUT} )
         public String ingresarJustificativo(@RequestParam String rut, @RequestParam String fecha, RedirectAttributes ms ) throws ParseException {
         int resultado = oficinaRRH.ingresarJustificativo(rut,fecha);
         switch(resultado){
