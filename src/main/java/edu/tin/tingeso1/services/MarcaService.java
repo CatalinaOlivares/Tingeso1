@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import java.io.*;
 import java.sql.Time;
-import java.text.ParseException;
 import java.sql.Date;
 
 @Service
@@ -14,7 +13,8 @@ public class MarcaService {
     @Autowired
     MarcaRepository marcaRepository;
 
-    public void leerData() throws IOException, ParseException {
+    public void leerData() throws IOException{
+        marcaRepository.deleteAll();
         File doc = new File("DATA.txt");
         try(BufferedReader obj = new BufferedReader(new FileReader(doc))) {
             String strng;
@@ -25,9 +25,6 @@ public class MarcaService {
                 MarcaEntity marca= new MarcaEntity(Date.valueOf(part1), Time.valueOf(part2), parts[2]);
                 marcaRepository.save(marca);
             }
-        }
-        catch (IOException e){
-
         }
 
     }

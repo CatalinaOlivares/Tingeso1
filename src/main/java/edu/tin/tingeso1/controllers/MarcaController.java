@@ -7,8 +7,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import java.io.IOException;
-import java.text.ParseException;
-//holaaaa
+
 @Controller
 @RequestMapping
 public class MarcaController {
@@ -16,7 +15,7 @@ public class MarcaController {
     MarcaService marcaService;
 
     @PostMapping("/loaddata")
-    public String loaddata(RedirectAttributes ms) throws IOException, ParseException {
+    public String loaddata(RedirectAttributes ms) throws IOException{
         marcaService.leerData();
         ms.addFlashAttribute("mensaje","se importo con exito");
         return "redirect:/importar";

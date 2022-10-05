@@ -103,9 +103,9 @@ public class OficinaRRH {
     //Categoria "C":
     public Integer calcularBonificacionHorasExtras(String rut){
         EmpleadoEntity empleado=empleadoRepository.findByRut(rut);
-        return obtenerBonifHorasExtras(rut, empleado);
+        return obtenerBonifHorasExtras( empleado);
     }
-    public Integer obtenerBonifHorasExtras(String rut, EmpleadoEntity empleado) {
+    public Integer obtenerBonifHorasExtras( EmpleadoEntity empleado) {
         Integer bonificacionPorHorasExtras = 0;
         Integer numHorasExtras;
         if(empleado.getHorasExtras() == null){
@@ -157,8 +157,7 @@ public class OficinaRRH {
 
     //calcular Sueldo
     public double calcularSueldoFinal(double sueldoFijo, String rut){
-        EmpleadoEntity empleado=empleadoRepository.findByRut(rut);
-        return obtenerSueldoFinal(sueldoFijo, rut, empleado);
+        return obtenerSueldoFinal(sueldoFijo, rut);
     }
 
     public double sueldoFijo(String rut){
@@ -181,7 +180,7 @@ public class OficinaRRH {
     }
 
 
-    public double obtenerSueldoFinal(double sueldoFijo,String rut,EmpleadoEntity empleado) {
+    public double obtenerSueldoFinal(double sueldoFijo,String rut) {
         double sueldo = 0;
         sueldo= sueldoFijo(rut)+(sueldoFijo*calcularBonificacionTiempoServicio(rut))+ calcularBonificacionHorasExtras(rut) - (sueldoFijo*calcularDescuento(rut));
         double cot=0.10;

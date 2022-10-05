@@ -94,7 +94,7 @@ class OficinaRRHTest {
         empleado.setRut("27.134.678-6");
         empleado.setCategoria("C");
         empleado.setHorasExtras(10);
-        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado.getRut(),empleado);
+        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado);
         assertEquals(1000000, bonifHoraExtra, 0.0);
     }
     @Test
@@ -102,7 +102,7 @@ class OficinaRRHTest {
         empleado.setRut("27.134.678-6");
         empleado.setCategoria("A");
         empleado.setHorasExtras(5);
-        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado.getRut(),empleado);
+        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado);
 
         assertEquals(125000, bonifHoraExtra, 0.0);
     }
@@ -111,7 +111,7 @@ class OficinaRRHTest {
         empleado.setRut("27.134.678-6");
         empleado.setCategoria("B");
         empleado.setHorasExtras(3);
-        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado.getRut(),empleado);
+        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado);
 
         assertEquals(60000, bonifHoraExtra, 0.0);
     }
@@ -120,7 +120,7 @@ class OficinaRRHTest {
         empleado.setRut("27.134.678-6");
         empleado.setCategoria("F");
         empleado.setHorasExtras(3);
-        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado.getRut(),empleado);
+        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado);
 
         assertEquals(0, bonifHoraExtra, 0.0);
     }
@@ -128,7 +128,7 @@ class OficinaRRHTest {
     void obtenerBonifHoraExtraTest5() {
         empleado.setRut("27.134.678-6");
         empleado.setCategoria("F");
-        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado.getRut(),empleado);
+        double bonifHoraExtra = oficinaRRHH.obtenerBonifHorasExtras(empleado);
 
         assertEquals(0, bonifHoraExtra, 0.0);
     }
