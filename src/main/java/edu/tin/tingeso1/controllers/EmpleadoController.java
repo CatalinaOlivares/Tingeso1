@@ -16,6 +16,7 @@ import java.util.ArrayList;
 @Controller
 @RequestMapping
 public class EmpleadoController {
+    static final String MENSAJE = "mensaje";
     @Autowired
     EmpleadoService empleadoService;
     @Autowired
@@ -36,14 +37,19 @@ public class EmpleadoController {
         public String ingresarJustificativo(@RequestParam String rut, @RequestParam String fecha, RedirectAttributes ms ) throws ParseException {
         int resultado = oficinaRRH.ingresarJustificativo(rut,fecha);
         switch(resultado){
-            case -2 -> ms.addFlashAttribute("mensaje","Dia ya justificado");
-            case -1 -> ms.addFlashAttribute("mensaje","Datos Erroneos, Marca no existe");
-            case 1 -> ms.addFlashAttribute("mensaje","se ingresó el justificativo con exito");
-            case 0 -> ms.addFlashAttribute("mensaje","No puede optar a justificativo");
+            case -2 -> ms.addFlashAttribute(MENSAJE,"Dia ya justificado");
+            case -1 -> ms.addFlashAttribute(MENSAJE,"Datos Erroneos, Marca no existe");
+            case 1 -> ms.addFlashAttribute(MENSAJE,"se ingresó el justificativo con exito");
+            case 0 -> ms.addFlashAttribute(MENSAJE,"No puede optar a justificativo");
+            default -> ms.addFlashAttribute(MENSAJE,"Error");
+
         }
+
         // usar el metodo para cargar justificativo
         return "redirect:/ingresar_Justificativos";
+
     }
+
 
 
     @GetMapping("/ingresar_autorizaciones_horas_extras")
@@ -55,8 +61,9 @@ public class EmpleadoController {
     public String ingresarAutorizacionHorEx(@RequestParam String rut , @RequestParam Date fecha, RedirectAttributes ms){
         Integer resultado=oficinaRRH.ingresarJusHorExtra(rut,fecha);
         switch(resultado){
-            case 0 -> ms.addFlashAttribute("mensaje","Se autorizaron las horas extras");
-            case 1 -> ms.addFlashAttribute("mensaje","Datos Erroneos, Marca no existe");
+            case 0 -> ms.addFlashAttribute(MENSAJE,"Se autorizaron las horas extras");
+            case 1 -> ms.addFlashAttribute(MENSAJE,"Datos Erroneos, Marca no existe");
+            default -> ms.addFlashAttribute(MENSAJE,"Error");
         }
         return "redirect:/ingresar_autorizaciones_horas_extras";
     }
